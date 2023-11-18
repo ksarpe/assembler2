@@ -40,15 +40,13 @@ main ENDP
 BubbleSort PROC
     push ebp             ; Zapisuje na stosie bazowy wska?nik stosu poprzedniej funkcji/procedury
     mov ebp, esp         ; Ustawia bazowy wska?nik stosu na aktualny wska?nik stosu
-    ;sub esp, 4           ; Rezerwuje 4 bajty na stosie dla lokalnej zmiennej/flagi
 
-    mov ebx, [ebp+8]     ; Wczytuje do rejestru ESI adres pocz?tkowy tablicy (parametr przekazany przez stos)
-    ;mov [esp], esi       ; Zapisuje oryginalny adres tablicy na stosie jako punkt odniesienia
+    mov ebx, [ebp+8]     ; Wczytuje do rejestru EBX adres pocz?tkowy tablicy (parametr przekazany przez stos)
     mov ecx, [ebp+12]    ; Wczytuje do rejestru ECX rozmiar tablicy (parametr przekazany przez stos)
     dec ecx              ; Dekrementuje ECX, poniewa? w sortowaniu b?belkowym ostatni element jest ju? na miejscu po pierwszym przej?ciu
 
 OuterLoop:
-    mov esi, ebx ; []       ; Resetuje ESI do oryginalnego adresu tablicy zapisanego na stosie
+    mov esi, ebx       ; Resetuje ESI do oryginalnego adresu tablicy zapisanego na stosie
     mov edi, ecx         ; Przekopiuje warto?? ECX do EDI
     dec edi              ; Dekrementuje EDI, aby EDI by?o mniejsze o jeden od ECX
     lea edi, [esi + 4*edi + 4] ; Ustawia EDI na koniec cz?ci tablicy, kt?ra b?dzie sortowana (minus jeden element)
@@ -67,7 +65,6 @@ NoSwap:
     dec ecx              ; Dekrementuje ECX, bo ostatni element jest ju? posortowany
     jnz OuterLoop        ; Je?li ECX nie jest zerem, oznacza to, ?e nie doszli?my do ko?ca tablicy i skacze do OuterLoop
 
-    ;add esp, 4           ; Zwalnia miejsce zarezerwowane na stosie
     pop ebp              ; Przywraca poprzedni? warto?? EBP
     ret 8                ; Zwraca sterowanie do wywo?uj?cego, zwalniaj?c miejsce 8 bajt?w (2 parametry * 4 bajty) z stosu
 BubbleSort ENDP
