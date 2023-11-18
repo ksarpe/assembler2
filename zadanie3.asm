@@ -2,7 +2,8 @@ INCLUDE Irvine32.inc
 
 .data
 array DWORD 8 DUP(?) 
-arraySize DWORD 8  
+arraySize DWORD 8
+msg db "Posortowana tablica: ", 0
 
 .code
 main PROC
@@ -17,15 +18,21 @@ ReadLoop:
     push arraySize   
     push OFFSET array
     
-    call BubbleSort
+    ;call BubbleSort
     ;call InsertionSort
     ;call SelectionSort
+
+    ;przygotowanie pod quick sort
     mov esi, OFFSET array
     mov ecx, arraySize
-    ;call QuickSort
+    call QuickSort
     
     mov ecx, arraySize
     lea esi, array
+
+    lea edx, msg
+    call WriteString
+    call Crlf
 PrintLoop:
     mov eax, [esi]     ; Wczytaj warto?? do wypisania
     call WriteInt      ; Wypisz warto??
